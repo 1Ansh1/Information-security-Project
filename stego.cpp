@@ -1,14 +1,12 @@
-// stego.cpp
-// Simple Encrypted LSB Steganography Tool (24-bit BMP)
-// Educational: Caesar and Vigenere-style (byte-additive) ciphers.
-// Build: g++ -std=c++17 stego.cpp -o stego
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
 #include <stdexcept>
 #include <cstdint>
-#include <cstring> // for memcpy
+#include <cstring> 
+#include <cstddef> 
 
 using namespace std;
 
@@ -117,9 +115,10 @@ void write_bmp_24(const string &path, const BMPImage &img)
     memcpy(out.data() + sizeof(BMPFileHeader), &img.ih, sizeof(BMPInfoHeader));
     memcpy(out.data() + img.fh.bfOffBits, img.pixels.data(), img.pixels.size());
 
-    // update bfSize
-    uint32_t newSize = (uint32_t)out.size();
-    memcpy(out.data() + offsetof(BMPFileHeader, bfSize), &newSize, sizeof(uint32_t));
+    // update bfSize directly
+    BMPFileHeader *fh_ptr = reinterpret_cast<BMPFileHeader *>(out.data());
+    fh_ptr->bfSize = static_cast<uint32_t>(out.size());
+
     write_file_bytes(path, out);
 }
 

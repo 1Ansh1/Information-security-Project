@@ -1,0 +1,8 @@
+1. Using the caesar cipher:
+for embeding : "./stego embed cover.bmp stego.bmp message.txt "caesar,5" dummykey"
+for extracting : "./stego extract stego.bmp extracted.txt 5"
+
+
+2. Using the Vigenere cipher:
+for embeding : "./stego embed cover.bmp stego_vig.bmp message.txt "vigenere,1" mypassword"
+fro extracting : "./stego extract stego_vig.bmp extracted_vig.txt mypassword"
